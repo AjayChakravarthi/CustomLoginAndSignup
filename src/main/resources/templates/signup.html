@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Signup</title>
+
+    <style>
+
+        /* 🔥 PAGE BACKGROUND EFFECT ONLY */
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Floating blurred glass orbs */
+        .orb {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,180,255,0.35), transparent 70%);
+            filter: blur(80px);
+            animation: floatOrb 8s infinite ease-in-out alternate;
+        }
+
+        .orb:nth-child(1) { top: -120px; left: -150px; }
+        .orb:nth-child(2) { bottom: -120px; right: -150px; animation-delay: 2s; }
+
+        @keyframes floatOrb {
+            0%   { transform: translate(0px,0px); opacity: 0.7; }
+            100% { transform: translate(60px,-40px); opacity: 1; }
+        }
+
+        /* Smooth moving gradient */
+        .gradient-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(0,150,255,0.15), rgba(0,255,200,0.15), rgba(0,0,0,0.3));
+            background-size: 200%;
+            animation: drift 18s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes drift {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Clean signup card */
+        .signup-container {
+            width: 360px;
+            padding: 30px;
+            border-radius: 14px;
+
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+
+            text-align: center;
+            position: relative;
+            z-index: 5;
+        }
+
+        h2 {
+            color: white;
+            margin-bottom: 25px;
+            text-shadow: 0 0 6px rgba(255,255,255,0.3);
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            color: #e0e0e0;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.25);
+
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(6px);
+            color: white;
+            transition: 0.25s ease;
+        }
+
+        input:focus {
+            border-color: #00c8ff;
+            box-shadow: 0 0 12px rgba(0,200,255,0.5);
+            outline: none;
+            transform: scale(1.02);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #008cff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.25s;
+        }
+
+        button:hover {
+            background: #00aaff;
+            box-shadow: 0 0 18px rgba(0,200,255,0.7);
+        }
+
+        a {
+            color: #00d5ff;
+            text-decoration: none;
+        }
+
+        .login-link { margin-top: 12px; }
+
+    </style>
+</head>
+<body>
+
+<!-- Animated Background -->
+<div class="orb"></div>
+<div class="orb"></div>
+<div class="gradient-layer"></div>
+
+<!-- Signup Box -->
+<div class="signup-container">
+    <h2>Signup</h2>
+
+    <form th:action="@{/signup}" method="post" th:object="${user}">
+        <label>Username:</label>
+        <input type="text" th:field="*{username}" placeholder="Choose username" required>
+
+        <label>Password:</label>
+        <input type="password" th:field="*{password}" placeholder="Choose password" required>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+    <p class="login-link">
+        Already have an account?
+        <a th:href="@{/login}">Login here</a>
+    </p>
+</div>
+
+</body>
+</html>

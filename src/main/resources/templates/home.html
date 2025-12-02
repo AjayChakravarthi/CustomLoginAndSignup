@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home</title>
+
+    <style>
+
+        /* Background Animation */
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #000;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .orb {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,180,255,0.35), transparent 70%);
+            filter: blur(80px);
+            animation: floatOrb 8s infinite alternate ease-in-out;
+        }
+
+        .orb:nth-child(1) { top: -120px; left: -150px; }
+        .orb:nth-child(2) { bottom: -120px; right: -150px; animation-delay: 2s; }
+
+        @keyframes floatOrb {
+            0%   { transform: translate(0px,0px); opacity: 0.7; }
+            100% { transform: translate(60px,-40px); opacity: 1; }
+        }
+
+        .gradient-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(0,150,255,0.15), rgba(0,255,200,0.15), rgba(0,0,0,0.3));
+            background-size: 200%;
+            animation: drift 18s infinite alternate ease-in-out;
+        }
+
+        @keyframes drift {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Content Box */
+        .content-box {
+            padding: 25px 40px;
+            border-radius: 14px;
+
+            background: rgba(255,255,255,0.10);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12);
+
+            z-index: 5;
+            text-align: center;
+        }
+
+        h1, p, a {
+            color: white;
+        }
+
+        a {
+            color: #00d5ff;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Background -->
+<div class="orb"></div>
+<div class="orb"></div>
+<div class="gradient-layer"></div>
+
+<!-- Home Content -->
+<div class="content-box">
+    <h1>Home</h1>
+    <p>Welcome to the Home Page!</p>
+    <p>
+        <a th:href="@{/hello}">Go to Hello Page</a>
+    </p>
+</div>
+
+</body>
+</html>
