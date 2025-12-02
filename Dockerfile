@@ -1,35 +1,28 @@
-# -----------------------------
-# 1. Build Stage
-# -----------------------------
+# ---------- Stage 1: Build ----------
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 
-# Set working directory inside container
 WORKDIR /app
 
-# Copy only pom.xml first
-COPY CustomeLoginAndSignup/pom.xml .
+# Copy only pom.xml first (layer caching)
+COPY pom.xml .
 
-# Download dependencies (cache layer)
+# Download dependencies
 RUN mvn dependency:go-offline
 
 # Copy full project
-COPY CustomeLoginAndSignup ./
+COPY . .
 
-# Build the JAR
+# Build application
 RUN mvn clean package -DskipTests
 
 
-# -----------------------------
-# 2. Run Stage
-# -----------------------------
+# ---------- Stage 2: Run ----------
 FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /app
 
-# Copy the built JAR from the build stage
 COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-# Default command
 ENTRYPOINT ["java", "-jar", "app.jar"]
